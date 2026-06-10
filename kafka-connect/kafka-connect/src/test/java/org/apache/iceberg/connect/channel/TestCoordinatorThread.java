@@ -31,7 +31,7 @@ public class TestCoordinatorThread {
   @Test
   public void testRun() {
     Coordinator coordinator = mock(Coordinator.class);
-    CoordinatorThread coordinatorThread = new CoordinatorThread(coordinator);
+    CoordinatorThread coordinatorThread = new CoordinatorThread("test-connector", coordinator);
 
     coordinatorThread.start();
 

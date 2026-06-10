@@ -108,7 +108,7 @@ class Coordinator extends Channel {
             new LinkedBlockingQueue<>(),
             new ThreadFactoryBuilder()
                 .setDaemon(true)
-                .setNameFormat("iceberg-committer" + "-%d")
+                .setNameFormat(config.connectorName() + "-iceberg-committer-%d")
                 .build());
     this.commitState = new CommitState(config);
     this.taskId = config.connectorName() + "-" + config.taskId();
