@@ -2446,9 +2446,9 @@ components:
         doc:
           type: string
         initial-default:
-          $ref: "#/components/schemas/PrimitiveTypeValue"
+          $ref: "#/components/schemas/FieldDefaultValue"
         write-default:
-          $ref: "#/components/schemas/PrimitiveTypeValue"
+          $ref: "#/components/schemas/FieldDefaultValue"
 
     StructType:
       type: object
@@ -4941,6 +4941,15 @@ components:
         - $ref: '#/components/schemas/TimestampTzNanoTypeValue'
         - $ref: '#/components/schemas/FixedTypeValue'
         - $ref: '#/components/schemas/BinaryTypeValue'
+
+    FieldDefaultValue:
+      oneOf:
+        - $ref: '#/components/schemas/PrimitiveTypeValue'
+        - type: object
+          description: Struct or map field default where keys are field IDs and values are field-specific defaults
+          additionalProperties: true
+        - type: array
+          description: List field default
 
     FileFormat:
       type: string

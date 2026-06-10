@@ -197,7 +197,15 @@ public class SchemaParser {
 
   private static Literal<?> defaultFromJson(String defaultField, Type type, JsonNode json) {
     if (json.has(defaultField)) {
-      Object value = SingleValueParser.fromJson(type, json.get(defaultField));
+      JsonNode defaultNode = json.get(defaultField);
+
+      if (type.isNestedType()) {
+        // nested types don't support literal defaults;
+        // an empty struct {} means "use each field's own default", which is equivalent to null
+        return null;
+      }
+
+      Object value = SingleValueParser.fromJson(type, defaultNode);
       if (type instanceof Types.TimestampNanoType) {
         // Call Expressions.nanos instead of Expressions.lit to prevent overflow
         // https://github.com/apache/iceberg/issues/13160

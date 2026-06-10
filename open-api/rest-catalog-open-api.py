@@ -1011,6 +1011,13 @@ class PrimitiveTypeValue(
     )
 
 
+FieldDefaultValue = (
+    PrimitiveTypeValue
+    | dict[str, 'FieldDefaultValue']
+    | list['FieldDefaultValue']
+)
+
+
 class FileFormat(RootModel[Literal['avro', 'orc', 'parquet', 'puffin']]):
     root: Literal['avro', 'orc', 'parquet', 'puffin']
 
@@ -1377,8 +1384,8 @@ class StructField(BaseModel):
     type: Type
     required: bool
     doc: str | None = None
-    initial_default: PrimitiveTypeValue | None = Field(None, alias='initial-default')
-    write_default: PrimitiveTypeValue | None = Field(None, alias='write-default')
+    initial_default: 'FieldDefaultValue' | None = Field(None, alias='initial-default')
+    write_default: 'FieldDefaultValue' | None = Field(None, alias='write-default')
 
 
 class StructType(BaseModel):
